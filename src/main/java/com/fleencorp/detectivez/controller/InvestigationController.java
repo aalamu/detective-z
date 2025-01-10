@@ -22,11 +22,11 @@ public class InvestigationController {
 
   @PostMapping(value = "investigate")
   public String investigate(@Valid @RequestBody InvestigateDto investigateDto, BindingResult bindingResult, Model model) {
-    if (bindingResult.hasErrors()){
+    if (bindingResult.hasErrors()) {
       model.addAttribute("errors", bindingResult.getAllErrors());
       return "index";
     }
-    model.addAttribute("message", "success");
+    model.addAttribute("message", "Link investigated successfully.");
     return "investigate";
   }
 

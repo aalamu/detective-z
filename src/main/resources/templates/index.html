@@ -6,26 +6,26 @@
     <title>Detective Z</title>
 </head>
 <body>
-<h1>Your Security Companion</h1>
-<p>I am Detective Z and I will inform you about what is not legit.</p>
+    <h1>Your Security Companion</h1>
+    <p>I am Detective Z and I will inform you about what is not legit.</p>
 
-<h1>Investigate!</h1>
-<form action="/investigate" method="post">
-    <!-- Text input for link -->
-    <label>input link:</label><br>
-    <input type="text" id="link" name="link" placeholder="Enter link for investigation" required><br><br>
+    <h1>Investigate</h1>
+    <form action="/investigate" method="POST" enctype="application/x-www-form-urlencoded">
+        <!-- Text input for link -->
+        <label for="link">Input Link:</label><br>
+        <input type="text" id="link" name="link" placeholder="Enter link for investigation" required /><br><br>
 
-    <!-- Submit button -->
-    <button type="submit">Submit</button>
+        <!-- Submit button -->
+        <button type="submit">Submit</button>
 
-    <!-- Reset button -->
-    <button type="reset">Reset</button>
-</form>
+        <!-- Reset button -->
+        <button type="reset">Reset</button>
+    </form>
 
-<!--error section-->
+    <!--error section-->
 
     <div th:if="${errors != null}">
-        <h2>Errors!</h2>
+        <h2>Errors</h2>
         <ul>
             <li th:each="error: ${errors}" th:text="${error.defaultMessage}"></li>
         </ul>
