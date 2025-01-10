@@ -16,7 +16,6 @@ public class InvestigateDto {
 
     @NotBlank(message = "{investigate.link}")
     @URL(message = "{investigate.link}")
-
     @JsonProperty("link")
     private String link;
 }
