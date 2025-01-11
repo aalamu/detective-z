@@ -1,7 +1,7 @@
 package com.fleencorp.detectivez.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +14,8 @@ import org.hibernate.validator.constraints.URL;
 @AllArgsConstructor
 public class InvestigateDto {
 
-    @NotNull(message ="URL cant be null")
-    @URL(message = "URL must be valid")
+    @NotBlank(message = "{investigate.link}")
+    @URL(message = "{investigate.link}")
     @JsonProperty("link")
     private String link;
 }
