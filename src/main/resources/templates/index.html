@@ -1,10 +1,36 @@
-<!doctype html>
-<html>
-    <head>
-        <title>Detective Z</title>
-    </head>
-    <body>
-        <h1>Your Security Companion</h1>
-        <p>I am Detective Z and I will inform you about what is not legit.</p>
-    </body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detective Z</title>
+</head>
+<body>
+    <h1>Your Security Companion</h1>
+    <p>I am Detective Z and I will inform you about what is not legit.</p>
+
+    <h1>Investigate</h1>
+    <form action="/investigate" method="POST" enctype="application/x-www-form-urlencoded">
+        <!-- Text input for link -->
+        <label for="link">Input Link:</label><br>
+        <input type="text" id="link" name="link" placeholder="Enter link for investigation" required /><br><br>
+
+        <!-- Submit button -->
+        <button type="submit">Submit</button>
+
+        <!-- Reset button -->
+        <button type="reset">Reset</button>
+    </form>
+
+    <!--error section-->
+
+    <div th:if="${errors != null}">
+        <h2>Errors</h2>
+        <ul>
+            <li th:each="error: ${errors}" th:text="${error.defaultMessage}"></li>
+        </ul>
+    </div>
+
+</body>
 </html>
+
