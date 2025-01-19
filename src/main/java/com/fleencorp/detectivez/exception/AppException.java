@@ -1,14 +1,15 @@
 package com.fleencorp.detectivez.exception;
 
-public class AppException extends RuntimeException{
-    private final String errorCode;
+import lombok.Getter;
+import lombok.Setter;
 
-    public AppException(String message, String errorCode) {
-        super(message);
-        this.errorCode = errorCode;
-    }
+@Getter
+@Setter
+public class AppException extends RuntimeException {
+  private final String errorCode;
 
-    public String getErrorCode() {
-        return errorCode;
-    }
+  public AppException(String message, String errorCode) {
+    super(message);
+    this.errorCode = errorCode;
+  }
 }

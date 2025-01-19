@@ -2,6 +2,8 @@ package com.fleencorp.detectivez.controller;
 
 
 import com.fleencorp.detectivez.model.dto.InvestigateDto;
+import com.fleencorp.detectivez.model.response.CrawlerWebsiteResponse;
+import com.fleencorp.detectivez.service.CrawlerService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Slf4j
 public class InvestigationController {
 
+  private final CrawlerService crawlerService;
+
+  public InvestigationController(CrawlerService crawlerService) {
+    this.crawlerService = crawlerService;
+  }
+
   @GetMapping(value = "/")
   public String investigate() {
     return "index";
@@ -26,8 +34,9 @@ public class InvestigationController {
       model.addAttribute("errors", bindingResult.getAllErrors());
       return "index";
     }
+    CrawlerWebsiteResponse crawlerWebsiteResponse = crawlerService.investigateTarget(investigateDto.getLink());
     model.addAttribute("message", "Link investigated successfully.");
-    return "investigate";
+    return crawlerWebsiteResponse.textContent() == null || crawlerWebsiteResponse.textContent().isBlank() ? crawlerWebsiteResponse.textContent() : null;
   }
 
 }

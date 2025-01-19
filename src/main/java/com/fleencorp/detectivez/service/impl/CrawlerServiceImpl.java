@@ -8,29 +8,26 @@ import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 @Service
 public class CrawlerServiceImpl implements CrawlerService {
 
-   /*
-    This method
-    */
-    @Override
-    public CrawlerWebsiteResponse investigateTarget(String target) {
-
-        Document result=null;
-        try {
-            result = Jsoup.connect(target).get();
-        } catch (IOException e) {
-            throw new FailedOperationException();
-        }
-
-        CrawlerWebsiteResponse response = new CrawlerWebsiteResponse();
-        if(result!=null){
-            response.setTextContent(result.html());
-        }
-        return response;
+  /**
+   * Fetches and wraps the HTML content of the given target URL.
+   *
+   * @param target the URL to investigate.
+   * @return a CrawlerWebsiteResponse containing the website's HTML content.
+   * @throws FailedOperationException if an error occurs while connecting to the target URL.
+   */
+  @Override
+  public CrawlerWebsiteResponse investigateTarget(String target) {
+    Document result = null;
+    try {
+      result = Jsoup.connect(target).get();
+    } catch (IOException e) {
+      throw new FailedOperationException();
     }
+    CrawlerWebsiteResponse response = new CrawlerWebsiteResponse(result != null ? result.html() : "");
+    return response;
+  }
 }
