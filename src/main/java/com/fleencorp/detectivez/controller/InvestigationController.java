@@ -1,5 +1,6 @@
 package com.fleencorp.detectivez.controller;
 
+
 import com.fleencorp.detectivez.model.dto.InvestigateDto;
 import com.fleencorp.detectivez.model.response.investigation.InvestigateResponse;
 import com.fleencorp.detectivez.service.InvestigationService;
@@ -24,4 +25,5 @@ public class InvestigationController {
   public Mono<InvestigateResponse> investigate(final @Valid @RequestBody InvestigateDto investigateDto) {
     return investigationService.investigate(investigateDto);
   }
+
 }
