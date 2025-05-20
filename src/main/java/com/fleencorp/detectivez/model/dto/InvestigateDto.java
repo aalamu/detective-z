@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.URL;
 
 @Getter
 @Setter
@@ -14,8 +13,7 @@ import org.hibernate.validator.constraints.URL;
 @AllArgsConstructor
 public class InvestigateDto {
 
-    @NotBlank(message = "{investigate.link}")
-    @URL(message = "{investigate.link}")
-    @JsonProperty("link")
-    private String link;
+    @NotBlank(message = "{investigate.query}")
+    @JsonProperty("query")
+    private String query;
 }
