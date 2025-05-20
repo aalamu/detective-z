@@ -29,6 +29,16 @@ public class DetectiveMessageSourceConfiguration {
   @Value("${spring.messages.response.base-name}")
   private String responseMessageBaseName;
 
+  /**
+   * Creates and configures a base {@link ReloadableResourceBundleMessageSource} used for message resolution.
+   *
+   * <p>This message source is set to cache messages for 60 seconds. The default locale is set to {@link Locale#US}.
+   * Message formatting is always enabled. Message codes will not be used as default messages when not found.
+   * The system locale will not be used as a fallback. The default encoding for message files is set using
+   * the {@code messageSourceEncoding} field.</p>
+   *
+   * @return a configured instance of {@link ReloadableResourceBundleMessageSource}
+   */
   private ReloadableResourceBundleMessageSource baseMessageSource() {
     final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
     messageSource.setCacheSeconds(60);
@@ -40,6 +50,14 @@ public class DetectiveMessageSourceConfiguration {
     return messageSource;
   }
 
+  /**
+   * Defines the primary {@link MessageSource} bean for application-level messages.
+   *
+   * <p>Uses the base configuration from {@link #baseMessageSource()} and sets the
+   * message basename to {@code defaultMessageBaseName}.</p>
+   *
+   * @return the primary {@link MessageSource} bean
+   */
   @Bean
   public MessageSource messageSource() {
     final ReloadableResourceBundleMessageSource messageSource = baseMessageSource();
@@ -47,12 +65,29 @@ public class DetectiveMessageSourceConfiguration {
     return messageSource;
   }
 
+  /**
+   * Defines the primary {@link MessageSource} bean for application-level messages.
+   *
+   * <p>Uses the base configuration from {@link #baseMessageSource()} and sets the
+   * message basename to {@code defaultMessageBaseName}.</p>
+   *
+   * @return the primary {@link MessageSource} bean
+   */
   public MessageSource errorMessageSource() {
     final ReloadableResourceBundleMessageSource messageSource = baseMessageSource();
     messageSource.setBasenames(errorMessageBaseName);
     return messageSource;
   }
 
+  /**
+   * Creates a {@link MessageSource} configured for response messages.
+   *
+   * <p>This method reuses the base message source configuration from {@link #baseMessageSource()}
+   * and sets the message bundle basename to {@code responseMessageBaseName}, which should
+   * point to property files containing localized response messages.</p>
+   *
+   * @return a {@link MessageSource} for resolving localized response messages
+   */
   public MessageSource responseMessageSource() {
     final ReloadableResourceBundleMessageSource messageSource = baseMessageSource();
     messageSource.setBasenames(responseMessageBaseName);
