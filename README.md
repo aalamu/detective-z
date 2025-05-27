@@ -82,7 +82,10 @@ Detective Z provides **advisory insights** based on heuristics, public data, and
 
 
 
-
+### Environment Keys
+- OPENAI_API_KEY
+- GOOGLE_SEARCH_API_KEY
+- GOOGLE_SEARCH_ENGINE_KEY
 
 
 
