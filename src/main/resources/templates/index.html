@@ -9,27 +9,53 @@
     <h1>Your Security Companion</h1>
     <p>I am Detective Z and I will inform you about what is not legit.</p>
 
-    <h1>Investigate</h1>
-    <form action="/investigate" method="POST" enctype="application/x-www-form-urlencoded">
-        <!-- Text input for link -->
-        <label for="link">Input Link:</label><br>
-        <input type="text" id="link" name="link" placeholder="Enter link for investigation" required /><br><br>
+    <h2>Investigate</h2>
+    <form id="investigateForm">
+        <label for="query">Input Link or Query:</label><br>
+        <input type="text" id="query" name="query" placeholder="Enter link or a query like cbex for investigation" required /><br><br>
 
-        <!-- Submit button -->
         <button type="submit">Submit</button>
-
-        <!-- Reset button -->
         <button type="reset">Reset</button>
     </form>
 
-    <!--error section-->
+    <div id="result"></div>
 
-    <div th:if="${errors != null}">
-        <h2>Errors</h2>
-        <ul>
-            <li th:each="error: ${errors}" th:text="${error.defaultMessage}"></li>
-        </ul>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        document.getElementById('investigateForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const query = document.getElementById('query').value;
+
+            try {
+                const response = await fetch('/api/investigate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ query: query })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    document.getElementById('result').innerHTML = `<p style="color:red;">Error: ${errorText}</p>`;
+                    return;
+                }
+
+                const result = await response.json();
+
+                // Assuming result contains a markdown field like: { markdownContent: "### Investigation Result..." }
+                const markdownContent = result.content;
+                const htmlContent = marked.parse(markdownContent);
+
+                document.getElementById('result').innerHTML = htmlContent;
+
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<p style="color:red;">Request failed: ${error}</p>`;
+            }
+        });
+    </script>
 
 </body>
 </html>

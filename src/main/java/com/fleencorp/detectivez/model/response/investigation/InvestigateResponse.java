@@ -1,9 +1,6 @@
 package com.fleencorp.detectivez.model.response.investigation;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fleencorp.localizer.model.response.LocalizedResponse;
@@ -18,9 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonPropertyOrder({
+  "content",
+  "message"
+})
 public class InvestigateResponse extends LocalizedResponse {
 
-  @JsonProperty("result")
+  @JsonProperty("content")
   private String result;
 
   @JsonIgnore
@@ -43,14 +44,15 @@ public class InvestigateResponse extends LocalizedResponse {
 
   public static InvestigateResponse of(final String result) {
     final ObjectMapper mapper = new ObjectMapper();
-    String content = "";
+    final String content;
 
     try {
       final JsonNode rootNode = mapper.readTree(result);
       content = rootNode.get("content").asText();
     } catch (final Exception _) {
-      log.info("Error occurred");
-      return new InvestigateResponse(content);
+      final String errorMessage = "**No content available. An error has occurred.**";
+      log.info(errorMessage);
+      return new InvestigateResponse(errorMessage);
     }
 
     return new InvestigateResponse(content, result);

@@ -74,12 +74,15 @@ public class GoogleSearchAdapterImpl extends CustomRestAdapter implements Google
           );
           logIfEnabled(log::isErrorEnabled, () -> log.error(errorMessage));
 
-          return Mono.error(new ExternalSystemException(ExternalSystemType.googleSearch().getValue()));
+          final ExternalSystemException externalSystemException = new ExternalSystemException(ExternalSystemType.googleSearch().getValue());
+          return Mono.error(externalSystemException);
         }
       })
       .onErrorResume(e -> {
         log.error("Exception during Google Search API call", e);
-        return Mono.error(new ExternalSystemException(ExternalSystemType.googleSearch().getValue()));
+
+        final ExternalSystemException externalSystemException = new ExternalSystemException(ExternalSystemType.googleSearch().getValue());
+        return Mono.error(externalSystemException);
       });
   }
 }

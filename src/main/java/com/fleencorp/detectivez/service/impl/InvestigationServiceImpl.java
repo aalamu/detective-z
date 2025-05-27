@@ -1,6 +1,8 @@
 package com.fleencorp.detectivez.service.impl;
 
 import com.fleencorp.detectivez.adapter.base.service.InvestigationAdapter;
+import com.fleencorp.detectivez.exception.InvalidQueryException;
+import com.fleencorp.detectivez.exception.InvestigationException;
 import com.fleencorp.detectivez.model.dto.InvestigateDto;
 import com.fleencorp.detectivez.model.request.InvestigateRequest;
 import com.fleencorp.detectivez.model.response.external.ExternalInvestigateResponse;
@@ -36,10 +38,11 @@ public class InvestigationServiceImpl implements InvestigationService {
    *
    * @param investigateDto the DTO containing the query for investigation
    * @return a {@code Mono} emitting the {@link InvestigateResponse} with investigation results
-   * @throws RuntimeException if crawling or scoring fails during the asynchronous operations
+   * @throws InvalidQueryException if the query is invalid
+   * @throws InvestigationException if an exception occurs during the investigation
    */
   @Override
-  public Mono<InvestigateResponse> investigate(final InvestigateDto investigateDto) {
+  public Mono<InvestigateResponse> investigate(final InvestigateDto investigateDto) throws InvalidQueryException, InvestigationException {
     final String query = investigateDto.getQuery();
 
     return Mono.fromCallable(() -> crawlerService.crawlWebsiteOrLink(query))

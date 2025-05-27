@@ -34,12 +34,12 @@ public class ExternalInvestigationAdapter implements InvestigationAdapter {
     """
     Hey, use your existing dataset and analyze the result I'm providing. Determine if the content is related to a scam, fraud, or phishing.
     
-    Return a single JSON object with one property: `content`.  
-    The value of `content` should be a **Markdown-formatted string** (e.g., using `**bold**`, lists, headers, etc.).  
-    ⚠️ Do not include code blocks or wrap the response in triple backticks.  
+    Return a single JSON object with one property: `content`.
+    The value of `content` should be a **Markdown-formatted string** (e.g., using `**bold**`, lists, headers, etc.).
+    ⚠️ Do not include code blocks or wrap the response in triple backticks.
     ⚠️ Return only the JSON object, without any explanation or surrounding text.
     
-    If you're not certain whether the subject is related to scam, fraud, or phishing based on your dataset and the provided analysis, **do not make unreliable guesses**.  
+    If you're not certain whether the subject is related to scam, fraud, or phishing based on your dataset and the provided analysis, **do not make unreliable guesses**.
     Instead, advise the user cautiously, explain the limitations of your certainty, and share what signs or red flags the user should look out for to protect themselves from potential scams or fraud.
     
     Example:
@@ -47,9 +47,9 @@ public class ExternalInvestigationAdapter implements InvestigationAdapter {
       "content": "This appears to be a scam because:\n\n- **Red Flag 1**\n- **Red Flag 2**\n\nAuthorities should be alerted."
     }
     
-    Query: %s  
-    Analysis: %s  
-    Analysis 2: %s  
+    Query: %s
+    Analysis: %s
+    Analysis 2: %s
     Other content: %s
     """;
 

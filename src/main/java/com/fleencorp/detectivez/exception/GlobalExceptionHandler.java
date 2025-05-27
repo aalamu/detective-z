@@ -1,7 +1,7 @@
 package com.fleencorp.detectivez.exception;
 
 import com.fleencorp.detectivez.exception.external.ExternalSystemException;
-import com.fleencorp.localizer.model.exception.ApiException;
+import com.fleencorp.localizer.model.exception.LocalizedException;
 import com.fleencorp.localizer.model.response.ErrorResponse;
 import com.fleencorp.localizer.service.ErrorLocalizer;
 import jakarta.ws.rs.core.Response;
@@ -24,10 +24,9 @@ public class GlobalExceptionHandler {
     InvestigationException.class,
     InvalidQueryException.class,
     ExternalSystemException.class,
-    RuntimeException.class,
   })
   @ResponseStatus(value = BAD_REQUEST)
-  public ErrorResponse handleBadRequest(final ApiException e) {
+  public ErrorResponse handleBadRequest(final LocalizedException e) {
     return localizer.withStatus(e, Response.Status.BAD_REQUEST);
   }
 }
